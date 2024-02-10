@@ -140,23 +140,118 @@ class Card {
       return score;
   }
   
-    
-  checkFlush(rowOrColumn) {
-    const cards = rowOrColumn.filter(card => card !== 'FaceDown');
-    let score = 0;
+  //right but 1 1 0 0 1
+//   checkFlush(rowOrColumn) {
+//     const cards = rowOrColumn.filter(card => card !== 'FaceDown');
+//     let score = 0;
 
-    if (cards.length >= 3) {
-        const suits = new Set(cards.map(card => card.suit));
+//     if (cards.length >= 3) {
+//         const suitsMap = new Map();
+        
+//         for (const card of cards) {
+//             const suit = card.suit;
+//             suitsMap.set(suit, (suitsMap.get(suit) || 0) + 1);
+//         }
 
-        if (suits.size === 1) {
-            score += cards.length; // Flush
-        }
-    }
+//         for (const count of suitsMap.values()) {
+//             if (count >= 3 && count <= 5) {
+//                 score += count;
+//             }
+//         }
+//     }
 
-    return score;
+//     return score;
+// }
+
+// checkFlush(rowOrColumn) {
+//   const cards = rowOrColumn.filter(card => card !== 'FaceDown');
+//   let score = 0;
+
+//   if (cards.length >= 3) {
+//       const suitsMap = new Map();
+
+//       for (let i = 0; i < cards.length - 2; i++) {
+//           const currentCard = cards[i];
+//           const suit = currentCard.suit;
+//           const consecutiveSuits = [suit];
+
+//           for (let j = i + 1; j < cards.length; j++) {
+//               const nextCard = cards[j];
+
+//               if (nextCard.suit === suit && this.isConsecutiveSuits(consecutiveSuits, nextCard.suit)) {
+//                   consecutiveSuits.push(nextCard.suit);
+//               } else {
+//                   break; // If the next card breaks the consecutive sequence, stop checking
+//               }
+//           }
+
+//           // Check if consecutiveSuits forms a consecutive sequence
+//           if (consecutiveSuits.length >= 3) {
+//               score += consecutiveSuits.length;
+//           }
+//       }
+//   }
+
+//   return score;
+// }
+
+// isConsecutiveSuits(suits, currentSuit) {
+//   const index = this.deck.suits.indexOf(currentSuit);
+//   return suits.every(suit => this.deck.suits.indexOf(suit) === index - 1 || this.deck.suits.indexOf(suit) === index + 1);
+// }
+
+
+
+ checkFlush(rowOrColumn) {
+  const cards = rowOrColumn.filter(card => card !== 'FaceDown');
+  let score = 0;
+
+  if (cards.length >= 3) {
+      const suitsMap = new Map();
+      let currentSuit = null;
+      let currentStreak = 0;
+
+      for (const card of cards) {
+          const suit = card.suit;
+
+          if (suit === currentSuit) {
+              currentStreak++;
+          } else {
+              currentSuit = suit;
+              currentStreak = 1;
+          }
+
+          if (currentStreak >= 3) {
+              score += currentStreak;
+          }
+      }
+  }
+
+  return score;
 }
 
+
+
     
+//   checkFlush(rowOrColumn) {
+//     const cards = rowOrColumn.filter(card => card !== 'FaceDown');
+//     let score = 0;
+
+//     if (cards.length >= 3) {
+//         const suits = new Set(cards.map(card => card.suit));
+
+//         if (suits.size === 1) {
+//             score += cards.length; // Flush
+//         }
+//     }
+
+//     return score;
+// }
+
+
+
+
+
 
 calculateScore(playerIndex) {
   let totalScore = 0;
