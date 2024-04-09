@@ -1,0 +1,207 @@
+:root{
+    --primary: #2ecc71;
+    --secondary: #3498db;
+    --text-color: rgb(27, 27, 27);
+    --theme-color: #0c1629;
+    --white: white;
+}
+
+.dark{
+    --primary: #0c1629;
+    --secondary: #3498db;
+    --text-color: white;
+    --theme-color: white;
+    --white: #0c1629;
+}
+
+
+h1, h2, h3, h4, h5, h6{
+    color: var(--text-color) !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+    background: var(--primary) !important;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    h1 {
+        font-size: 2em;
+    }
+}
+
+
+
+/* MODAL CODE */
+#nameError{
+    font-size: 12px;
+    display: none;
+}
+
+#nameError.show{
+    display: block;
+}
+/* MODAL CODE END */
+
+
+.game-container {
+    padding: 2%;
+}
+
+.game-container-header {
+    display: flex;
+    justify-content: space-between;
+    height: 275px;
+}
+
+.card-grid-inner {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5em;
+    width: 294px;
+    margin: auto;
+    margin-top: -20px;
+}
+
+.card-grid-inner .card-face-down {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+img {
+    width: 100%;
+}
+
+
+
+.player-card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    /*grid-template-columns: repeat(5, 1fr);*/
+    width: 294px;
+    filter: grayscale(100%);
+    cursor: not-allowed;
+    border: 2px solid transparent;
+}
+
+.player-card-grid.active{
+    filter: grayscale(0%);
+    cursor: pointer;
+    animation: active 1s infinite alternate linear;
+}
+
+.pc-cards {
+    justify-content: end;
+}
+
+.card-image{
+    flex-basis: 51px;
+}
+
+@keyframes active {
+    0%{
+        border: 2px solid var(--text-color);
+    }
+    100%{
+        border: 2px solid transparent;
+    }
+}
+
+
+/*================= THEME BTN ==================*/
+.theme-container{
+    display: flex;
+    background: var(--theme-color);
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+
+    span{
+        color: var(--white);
+    }
+
+    &:hover{
+        box-shadow: 0 0 4px rgba(122, 122, 122, 0.466);
+
+        span{
+                animation: shake 0.5s ease-in-out;
+        
+        }
+    }
+}
+/*================= THEME BTN END ==================*/
+
+
+/*================= SCORING START ==================*/
+.scores{
+    display: flex;
+    padding-inline: 5%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3em;
+
+    h1{
+        color: var(--text-color);
+    }
+
+    #pcScore {
+        &.winner {
+            animation: fireAnimation 1s ease-in-out infinite alternate;
+        }
+    }
+
+    #userScore {
+        &.winner {
+            animation: fireAnimation 1s ease-in-out infinite alternate;
+        }
+    }
+
+    &.winner {
+        animation: fireAnimation 1s ease-in-out infinite alternate;
+    }
+
+
+}
+
+@keyframes fireAnimation {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  
+/*================= SCORING ENDS ==================*/
+
+
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+/* Apply the shake animation to an element */
+.shake-element {
+    animation: shake 0.5s ease-in-out;
+}
