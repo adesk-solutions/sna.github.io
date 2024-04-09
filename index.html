@@ -122,9 +122,58 @@
             volume_up
         </span>
     </div>
+    <div class="help-container" id="helpToggleBtn" title="Help" data-bs-toggle="modal" data-bs-target="#helpModal">
+        <span class="material-symbols-outlined">
+            info
+        </span>
+    </div>
     
     <script src="script.js"></script>
 
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="helpModalLabel">Quick Guide</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">             
+                <ul>
+                    <li><strong>Time Left:</strong> You have 30 seconds to select a card, otherwise, it will be auto-selected.</li>
+                    <li><strong>Difficulty Level:</strong> If <strong>"Easy"</strong> is selected, AI will choose the next card in the deck. However, if <strong>"Advanced"</strong> is selected, AI will prioritize selecting a card that maximizes its score.</li>
+                    <li><strong>Sound:</strong> To turn on/off the sound, click on the sound icon <span class="material-symbols-outlined">volume_up</span>on the bottom right of the page.</li>
+                    <li><strong>Change Theme:</strong> To change the theme, click on the <span class="material-symbols-outlined">contrast</span>contrast icon on the bottom right of the page.</li>
+                    <li><strong>Game Variant:</strong> 
+                        <ul>
+                            <li><strong>Scoring as you go:</strong>  Score will be calculated at each round.</li>
+                            <li><strong>Scoring at the end:</strong>  Score will be calculated at the end of the game.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Scoring Rules:</strong> Score as follows when the card you play makes any and all of the following combinations in the same row or column as itself:
+                        <ul>
+                            <li>Pair: 2 points</li>
+                            <li>Prial: 6 points</li>
+                            <li>Double Pair Royal: 12 points</li>
+                            <li>Run (sequence) of three: 3 points</li>
+                            <li>Run (sequence) of four: 4 points</li>
+                            <li>Run (sequence) of five: 5 points</li>
+                            <li>Flush of three: 3 points</li>
+                            <li>Flush of four: 4 points</li>
+                            <li>Flush of five: 5 points</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>For more details, you can visit <a href="https://www.parlettgames.uk/oricards/snailspace.html" target="_blank">this link</a>.</p>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 
 </html>

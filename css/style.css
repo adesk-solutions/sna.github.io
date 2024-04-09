@@ -28,6 +28,32 @@
 .dark .sound-container{
     color: #0c1629;
 }
+
+.help-container:hover {
+    box-shadow: 0 0 4px rgba(122,122,122,.466);
+}
+.help-container:hover span {
+    animation: shake .5s ease-in-out;
+}
+.help-container{
+    display: flex;
+    background: var(--theme-color);
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 7em;
+    right: 1em;
+    cursor: pointer;
+    transition: .3s;
+    color:#fff;
+}
+.dark .help-container{
+    color: #0c1629;
+}
+
 .scores-container{
     align-items: center;
     justify-content: center;
@@ -55,6 +81,9 @@
     color: #fff
 }
 
+.dark .modal-title{
+color:#000 !important;
+}
 .scores-container .alert-warning{
     color:red;
 }
@@ -62,3 +91,16 @@
 .countdown-clock.add-alert-animation {
     animation: fireAnimation 1s ease-in-out infinite alternate;
 }
+
+.modal-body .material-symbols-outlined{
+background-color: var(--theme-color) ;
+color:#fff;
+border-radius:6px; 
+}
+
+.dark .modal-body .material-symbols-outlined{   
+    color:#000;
+    }
+    
+        
+    
