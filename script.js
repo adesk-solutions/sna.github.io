@@ -384,42 +384,62 @@ function isPair(row, col, grid) {
     let score = 0;
 
     // Get the value of the current card
-    let currentValue = grid[row][col].slice(0, -1); // Remove the last character (category)
+    let currentValue = grid[row][col].slice(0, -1); // Remove the last character (suit)
 
-    // Check left
-    if (col > 0) {
-        let leftValue = grid[row][col - 1].slice(0, -1);
-        if (leftValue === currentValue) {
-            score += 2;
-        }
+    // Check the row for pairs
+    if (grid[row].filter(card => card.slice(0, -1) === currentValue).length >= 2) {
+        score += 2;
     }
 
-    // Check right
-    if (col < grid[0].length - 1) {
-        let rightValue = grid[row][col + 1].slice(0, -1);
-        if (rightValue === currentValue) {
-            score += 2;
-        }
-    }
-
-    // Check top
-    if (row > 0) {
-        let topValue = grid[row - 1][col].slice(0, -1);
-        if (topValue === currentValue) {
-            score += 2;
-        }
-    }
-
-    // Check bottom
-    if (row < grid.length - 1) {
-        let bottomValue = grid[row + 1][col].slice(0, -1);
-        if (bottomValue === currentValue) {
-            score += 2;
-        }
+    // Check the column for pairs
+    if (grid.map(row => row[col].slice(0, -1)).filter(value => value === currentValue).length >= 2) {
+        score += 2;
     }
 
     return score;
 }
+
+
+// function isPair(row, col, grid) {
+//     let score = 0;
+
+//     // Get the value of the current card
+//     let currentValue = grid[row][col].slice(0, -1); // Remove the last character (category)
+
+//     // Check left
+//     if (col > 0) {
+//         let leftValue = grid[row][col - 1].slice(0, -1);
+//         if (leftValue === currentValue) {
+//             score += 2;
+//         }
+//     }
+
+//     // Check right
+//     if (col < grid[0].length - 1) {
+//         let rightValue = grid[row][col + 1].slice(0, -1);
+//         if (rightValue === currentValue) {
+//             score += 2;
+//         }
+//     }
+
+//     // Check top
+//     if (row > 0) {
+//         let topValue = grid[row - 1][col].slice(0, -1);
+//         if (topValue === currentValue) {
+//             score += 2;
+//         }
+//     }
+
+//     // Check bottom
+//     if (row < grid.length - 1) {
+//         let bottomValue = grid[row + 1][col].slice(0, -1);
+//         if (bottomValue === currentValue) {
+//             score += 2;
+//         }
+//     }
+
+//     return score;
+// }
 
 function isPrial(row, col, grid) {
     let score = 0;
@@ -466,49 +486,78 @@ function isPrial(row, col, grid) {
     return score;
 }
 
-
 function getSequenceScore(row, col, grid) {
     let score = 0;
 
-    // Get the values of the current card and its adjacent cards
-    // let currentValue = grid[row][col].slice(0, -1); // Remove the last character (category)
-    // let left1Value = col > 0 ? grid[row][col - 1].slice(0, -1) : null;
-    // let left2Value = col > 1 ? grid[row][col - 2].slice(0, -1) : null;
-    // let right1Value = col < grid[0].length - 1 ? grid[row][col + 1].slice(0, -1) : null;
-    // let right2Value = col < grid[0].length - 2 ? grid[row][col + 2].slice(0, -1) : null;
-    // let top1Value = row > 0 ? grid[row - 1][col].slice(0, -1) : null;
-    // let top2Value = row > 1 ? grid[row - 2][col].slice(0, -1) : null;
-    // let bottom1Value = row < grid.length - 1 ? grid[row + 1][col].slice(0, -1) : null;
-    // let bottom2Value = row < grid.length - 2 ? grid[row + 2][col].slice(0, -1) : null;
+    // Get the suit of the card placed in the grid
+    const placedCardSuit = grid[row][col].slice(-1);
 
-    let rowValues = [];
-    let colValues = [];
+    // Get the row and column where the card is placed
+    const rowValues = grid[row].map(card => card.slice(-1));
+    const colValues = grid.map(row => row[col].slice(-1));
 
+    // Check if there are at least 3 cards with the same suit in the row or column
+    const countSameSuitInRow = rowValues.filter(suit => suit === placedCardSuit).length;
+    const countSameSuitInCol = colValues.filter(suit => suit === placedCardSuit).length;
 
-    for (let i = 0; i < grid.length; i++) {
-        colValues.push(grid[i][col].slice(0, -1));
-        rowValues.push(grid[row][i].slice(0, -1));
+    console.log(countSameSuitInRow);
+    console.log(countSameSuitInCol);
+    console.log("*******");
+    // Add points for runs of 3, 4, or 5 in the row or column
+    if (countSameSuitInRow >= 3 ) {
+        
+        score += countSameSuitInRow;
     }
-
-    rowValues = rowValues.filter(e => e !== '').sort(function(a, b) {
-        return cardValue(a) - cardValue(b);
-    });
-    colValues = colValues.filter(e => e !== '').sort(function(a, b) {
-        return cardValue(a) - cardValue(b);
-    });
-
-    const rowStr = rowValues.join('');
-    const colStr = colValues.join('');
-
-    if(SAMPLE_STRING.includes(rowStr)) {
-        score += rowValues.length >= 3 ? rowValues.length : 0;
-    }
-    if(SAMPLE_STRING.includes(colStr)) {
-        score += colValues.length >= 3 ? colValues.length : 0;
+    if (countSameSuitInCol >= 3) {
+        score += countSameSuitInCol;
     }
 
     return score;
 }
+
+
+// function getSequenceScore(row, col, grid) {
+//     let score = 0;
+
+//     // Get the values of the current card and its adjacent cards
+//     // let currentValue = grid[row][col].slice(0, -1); // Remove the last character (category)
+//     // let left1Value = col > 0 ? grid[row][col - 1].slice(0, -1) : null;
+//     // let left2Value = col > 1 ? grid[row][col - 2].slice(0, -1) : null;
+//     // let right1Value = col < grid[0].length - 1 ? grid[row][col + 1].slice(0, -1) : null;
+//     // let right2Value = col < grid[0].length - 2 ? grid[row][col + 2].slice(0, -1) : null;
+//     // let top1Value = row > 0 ? grid[row - 1][col].slice(0, -1) : null;
+//     // let top2Value = row > 1 ? grid[row - 2][col].slice(0, -1) : null;
+//     // let bottom1Value = row < grid.length - 1 ? grid[row + 1][col].slice(0, -1) : null;
+//     // let bottom2Value = row < grid.length - 2 ? grid[row + 2][col].slice(0, -1) : null;
+
+//     let rowValues = [];
+//     let colValues = [];
+
+
+//     for (let i = 0; i < grid.length; i++) {
+//         colValues.push(grid[i][col].slice(0, -1));
+//         rowValues.push(grid[row][i].slice(0, -1));
+//     }
+
+//     rowValues = rowValues.filter(e => e !== '').sort(function(a, b) {
+//         return cardValue(a) - cardValue(b);
+//     });
+//     colValues = colValues.filter(e => e !== '').sort(function(a, b) {
+//         return cardValue(a) - cardValue(b);
+//     });
+
+//     const rowStr = rowValues.join('');
+//     const colStr = colValues.join('');
+
+//     if(SAMPLE_STRING.includes(rowStr)) {
+//         score += rowValues.length >= 3 ? rowValues.length : 0;
+//     }
+//     if(SAMPLE_STRING.includes(colStr)) {
+//         score += colValues.length >= 3 ? colValues.length : 0;
+//     }
+
+//     return score;
+// }
 
 function getFlushScore(row, col, grid) {
     let score = 0;
@@ -622,6 +671,10 @@ function showConfetti(){
     document.getElementById('countdown-clock').textContent = '00';
     $('.countdown-clock').removeClass('alert-warning');
     $('.countdown-clock').removeClass('add-alert-animation');
+    document.querySelectorAll('.card-face-down').forEach(card => {
+        card.classList.remove('next-move');
+    });
+
 }
 
 function getSequenceScoreEnd(grid) {
