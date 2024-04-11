@@ -25,7 +25,7 @@ const DEALER = {
     player1: 'player1',
     player2: 'player2'
 }
-const SAMPLE_STRING  = '2345678910JQKA';
+const SAMPLE_STRING  = '12345678910JQK';
 
 let isSoundEnabled = true;
 let sound;
@@ -486,49 +486,95 @@ function isPrial(row, col, grid) {
     return score;
 }
 
+function hasSequenceOfLength(str, length) {
+    for (let i = 0; i <= str.length - length; i++) {
+        let isSequence = true;
+        for (let j = 1; j < length; j++) {
+            const current = parseInt(str[i + j]);
+            const previous = parseInt(str[i + j - 1]);
+            if (current !== previous + 1) {
+                isSequence = false;
+                break;
+            }
+        }
+        if (isSequence) {
+            return true; // Found a sequence of specified length
+        }
+    }
+    return false; // No sequence of specified length found
+}
+
 function getSequenceScore(row, col, grid) {
     let score = 0;
+    const rowValues = grid[row].map(card => card.slice(0, -1)).filter(e => e !== '');
+    const colValues = grid.map(row => row[col].slice(0, -1)).filter(e => e !== '');
 
-    // Get the suit of the card placed in the grid
-    const placedCardSuit = grid[row][col].slice(-1);
+    const rowStr = rowValues.sort((a, b) => parseInt(a) - parseInt(b)).join('');
+    const colStr = colValues.sort((a, b) => parseInt(a) - parseInt(b)).join('');
 
-    // Get the row and column where the card is placed
-    const rowValues = grid[row].map(card => card.slice(-1));
-    const colValues = grid.map(row => row[col].slice(-1));
+    console.log("Row:", rowStr);
+    console.log("Column:", colStr);
 
-    // Check if there are at least 3 cards with the same suit in the row or column
-    const countSameSuitInRow = rowValues.filter(suit => suit === placedCardSuit).length;
-    const countSameSuitInCol = colValues.filter(suit => suit === placedCardSuit).length;
-
-    console.log(countSameSuitInRow);
-    console.log(countSameSuitInCol);
-    console.log("*******");
-    // Add points for runs of 3, 4, or 5 in the row or column
-    if (countSameSuitInRow >= 3 ) {
-        
-        score += countSameSuitInRow;
+    if (hasSequenceOfLength(rowStr, 5)) {
+        console.log('ROW TRUE for sequence of 5');
+        //score += rowValues.length >= 5 ? rowValues.length : 0;
+        score += 5;
+    } else if (hasSequenceOfLength(rowStr, 4)) {
+        console.log('ROW TRUE for sequence of 4');
+        //score += rowValues.length >= 4 ? rowValues.length : 0;
+        score += 4;
+    } else if (hasSequenceOfLength(rowStr, 3)) {
+        console.log('ROW TRUE for sequence of 3');
+        //score += rowValues.length >= 3 ? rowValues.length : 0;
+        score += 3;
     }
-    if (countSameSuitInCol >= 3) {
-        score += countSameSuitInCol;
+    
+    if (hasSequenceOfLength(colStr, 5)) {
+        console.log('COL TRUE for sequence of 5');
+        //score += colValues.length >= 5 ? colValues.length : 0;
+        score += 5;
+    } else if (hasSequenceOfLength(colStr, 4)) {
+        console.log('COL TRUE for sequence of 4');
+        //score += colValues.length >= 4 ? colValues.length : 0;
+        score += 4;
+    } else if (hasSequenceOfLength(colStr, 3)) {
+        console.log('COL TRUE for sequence of 3');
+        //score += colValues.length >= 3 ? colValues.length : 0;
+        score += 3;
     }
 
     return score;
 }
 
 
+
+
 // function getSequenceScore(row, col, grid) {
 //     let score = 0;
+//     const rowValues = grid[row].map(card => card.slice(0, -1)).filter(e => e !== '');
+//     const colValues = grid.map(row => row[col].slice(0, -1)).filter(e => e !== '');
 
-//     // Get the values of the current card and its adjacent cards
-//     // let currentValue = grid[row][col].slice(0, -1); // Remove the last character (category)
-//     // let left1Value = col > 0 ? grid[row][col - 1].slice(0, -1) : null;
-//     // let left2Value = col > 1 ? grid[row][col - 2].slice(0, -1) : null;
-//     // let right1Value = col < grid[0].length - 1 ? grid[row][col + 1].slice(0, -1) : null;
-//     // let right2Value = col < grid[0].length - 2 ? grid[row][col + 2].slice(0, -1) : null;
-//     // let top1Value = row > 0 ? grid[row - 1][col].slice(0, -1) : null;
-//     // let top2Value = row > 1 ? grid[row - 2][col].slice(0, -1) : null;
-//     // let bottom1Value = row < grid.length - 1 ? grid[row + 1][col].slice(0, -1) : null;
-//     // let bottom2Value = row < grid.length - 2 ? grid[row + 2][col].slice(0, -1) : null;
+//     const rowStr = rowValues.sort((a, b) => parseInt(a) - parseInt(b)).join('');
+//     const colStr = colValues.sort((a, b) => parseInt(a) - parseInt(b)).join('');
+
+//     console.log("Row:", rowStr);
+//     console.log("Column:", colStr);
+
+//     if(SAMPLE_STRING.includes(rowStr)) {
+//         console.log('ROW TRUE');
+//         score += rowValues.length >= 3 ? rowValues.length : 0;
+//     }
+//     if(SAMPLE_STRING.includes(colStr)) {
+//         console.log('COL  TRUE');
+//         score += colValues.length >= 3 ? colValues.length : 0;
+//     }
+
+//     return score;
+// }
+
+
+// function getSequenceScore(row, col, grid) {
+//     let score = 0;
 
 //     let rowValues = [];
 //     let colValues = [];
@@ -549,6 +595,10 @@ function getSequenceScore(row, col, grid) {
 //     const rowStr = rowValues.join('');
 //     const colStr = colValues.join('');
 
+//     console.log(rowStr);
+//     console.log(colStr);
+//     console.log("***************");
+
 //     if(SAMPLE_STRING.includes(rowStr)) {
 //         score += rowValues.length >= 3 ? rowValues.length : 0;
 //     }
@@ -558,6 +608,8 @@ function getSequenceScore(row, col, grid) {
 
 //     return score;
 // }
+
+
 
 function getFlushScore(row, col, grid) {
     let score = 0;
@@ -591,8 +643,8 @@ function getFlushScore(row, col, grid) {
     if(colStr.length >= 3) {
         score += allCharactersSame(colStr) ? colStr.length : 0;
     }
-    // console.log('row',rowStr)
-    // console.log('col',colStr)
+     console.log('row',rowStr)
+     console.log('col',colStr)
 
     return score;
 }
@@ -608,7 +660,7 @@ function sortDeckCards(cards) {
 
 function cardValue(card) {
     if (card === 'A') {
-        return 14; // Ace has the highest value
+        return 1; // Ace has the lowest value
     } else if (card === 'K') {
         return 13;
     } else if (card === 'Q') {
